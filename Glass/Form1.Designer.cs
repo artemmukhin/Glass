@@ -67,6 +67,7 @@
             this.button2.Location = new System.Drawing.Point(44, 235);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(27, 23);
+            this.button2.TabIndex = 0;
             this.button2.Text = ">";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.nextStep_Click);
@@ -76,6 +77,7 @@
             this.button1.Location = new System.Drawing.Point(9, 235);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(27, 23);
+            this.button1.TabIndex = 1;
             this.button1.Text = "<";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.prevStep_Click);
@@ -108,6 +110,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Glass";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_Closing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

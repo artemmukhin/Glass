@@ -27,7 +27,6 @@ namespace Glass
 
         public bool ChangeCell(int col, char xORo)
         {
-            xORo = (xORo == 'X') ? 'x' : 'o'; // lower-case
             if (col < 0 || col > 9) return false;
             if (this.cells[0][col] != ' ') return false;
 

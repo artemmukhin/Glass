@@ -15,20 +15,20 @@ namespace Glass
             this.field = new Field();
             this.numberOfGame = numberOfGame;
 
-            string configFilePath = @"C:\config.txt";
+            //string configFilePath = @"C:\config.txt";
+            string configFilePath = Directory.GetCurrentDirectory() + @"\config.txt";
             StreamReader configFile = new StreamReader(configFilePath);
-            string glassPath = configFile.ReadLine();
+            this.glassPath = configFile.ReadLine();
             string exe1 = configFile.ReadLine();
             string exe2 = configFile.ReadLine();
 
             string path1 = glassPath + Convert.ToString(numberOfGame) + @"\X\";
             string path2 = glassPath + Convert.ToString(numberOfGame) + @"\O\";
-
+            this.logPath = glassPath + @"\log\";
+            this.glassPath += Convert.ToString(numberOfGame);
             Directory.CreateDirectory(path1);
-            //Directory.CreateDirectory(path1 + @"\O\");
             Directory.CreateDirectory(path2);
-            //Directory.CreateDirectory(path2 + @"\X\");
-
+            if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
             this.player1 = new Brain('X', path1, exe1);
             this.player2 = new Brain('O', path2, exe2);
             this.players = new IPlayer[2] { player1, player2 };
@@ -36,15 +36,19 @@ namespace Glass
         }
 
         public Field field;
-        Panel panel;
-        Label label;
-        IPlayer player1, player2;
-        IPlayer currentPlayer;
-        IPlayer[] players;
-        int amountOfSteps; // увеличивается каждые 2 хода
-        int numberOfStep; // увеличивается каждый ход
-        int numberOfGame; // уникальный номер игры
-        enum status : Int16 { notFinished = 0, player1Win = 1, player2Win = 2, invalidStep = 3 };
+        private Panel panel;
+        private Label label;
+        private IPlayer player1, player2;
+        private IPlayer currentPlayer;
+        private IPlayer[] players;
+        private int amountOfSteps; // увеличивается каждые 2 хода
+        private int numberOfStep; // увеличивается каждый ход
+        private int numberOfGame; // уникальный номер игры
+        private enum status : Int16 { notFinished = 0, player1Win = 1, player2Win = 2, invalidStep = 3 };
+        private string glassPath, logPath;
+        public string GlassPath { get { return glassPath; } }
+        public string LogPath { get { return logPath; } }
+
 
         public void StartGame()
         {

@@ -129,12 +129,12 @@ namespace Glass
                 return;
             }
 
-            if (cell == 'x') color = Brushes.Blue;
+            if (cell == 'X') color = Brushes.Blue;
             else color = Brushes.Purple;
 
             g.FillRectangle(Brushes.White, x, y, cellWidth, cellHeight);
             g.DrawRectangle(Pens.Black, x, y, cellWidth, cellHeight);
-            g.DrawString(Convert.ToString(cell), new Font("Tahoma", 15, FontStyle.Regular), color, x + 2, y - 2);
+            g.DrawString(Convert.ToString(cell).ToLower(), new Font("Tahoma", 15, FontStyle.Regular), color, x + 2, y - 2);
         }
 
         private void prevStep_Click(object sender, EventArgs e)
@@ -146,6 +146,19 @@ namespace Glass
         {
             this.allGames[tabControl1.SelectedIndex - 1].nextStep();
         }
-    }
 
+        private void Form1_Closing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to exit?", "Glass",
+                MessageBoxButtons.YesNo) == DialogResult.No) {
+                    e.Cancel = true;
+            }
+
+            int numberOfGame;
+            foreach (Game game in this.allGames) {
+                numberOfGame = Directory.GetDirectories(game.LogPath).Length + 1;
+                Directory.Move(game.GlassPath, game.LogPath + "game" + numberOfGame);
+            }
+        }
+    }
 }
