@@ -8,6 +8,7 @@ using System.IO;
 
 /*
 To-do:
+    * конфиг считывается в Form, и в Game передаётся массив Brain'ов
 */
 
 namespace Glass
@@ -19,9 +20,10 @@ namespace Glass
 
         public Form1()
         {
-            if (!File.Exists(@"C:\config.txt")) {
-                MessageBox.Show(@"Не найден конфигурационный файл C:\config.txt");
-                return;
+            string configFilePath = Directory.GetCurrentDirectory() + @"\config.txt";
+            if (!File.Exists(configFilePath)) {
+                MessageBox.Show(@"Не найден конфигурационный файл config.txt");
+                Environment.Exit(0);
             }
 
             InitializeComponent();
@@ -149,7 +151,7 @@ namespace Glass
 
         private void Form1_Closing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Do you want to exit?", "Glass",
+            if (MessageBox.Show("Вы уверены?", "Glass",
                 MessageBoxButtons.YesNo) == DialogResult.No) {
                     e.Cancel = true;
             }
@@ -157,8 +159,17 @@ namespace Glass
             int numberOfGame;
             foreach (Game game in this.allGames) {
                 numberOfGame = Directory.GetDirectories(game.LogPath).Length + 1;
-                Directory.Move(game.GlassPath, game.LogPath + "game" + numberOfGame);
+                if (Directory.Exists(game.GlassPath)) // юзер мог уже удалить каталог
+                    Directory.Move(game.GlassPath, game.LogPath + "game" + numberOfGame);
             }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.J)
+                this.allGames[tabControl1.SelectedIndex - 1].prevStep();
+            else if (e.KeyCode == Keys.K)
+                this.allGames[tabControl1.SelectedIndex - 1].nextStep();
         }
     }
 }

@@ -19,8 +19,15 @@ namespace Glass
             string configFilePath = Directory.GetCurrentDirectory() + @"\config.txt";
             StreamReader configFile = new StreamReader(configFilePath);
             this.glassPath = configFile.ReadLine();
-            string exe1 = configFile.ReadLine();
-            string exe2 = configFile.ReadLine();
+            string brain1 = configFile.ReadLine();
+            string brain2 = configFile.ReadLine();
+            string delimStr = " ,";
+            char[] delimiter = delimStr.ToCharArray();
+
+            string exe1 = brain1.Split(delimiter, 2)[0];
+            string name1 = brain1.Split(delimiter, 2)[1];
+            string exe2 = brain2.Split(delimiter, 2)[0];
+            string name2 = brain2.Split(delimiter, 2)[1];
 
             string path1 = glassPath + Convert.ToString(numberOfGame) + @"\X\";
             string path2 = glassPath + Convert.ToString(numberOfGame) + @"\O\";
@@ -29,8 +36,8 @@ namespace Glass
             Directory.CreateDirectory(path1);
             Directory.CreateDirectory(path2);
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-            this.player1 = new Brain('X', path1, exe1);
-            this.player2 = new Brain('O', path2, exe2);
+            this.player1 = new Brain('X', path1, exe1, name1);
+            this.player2 = new Brain('O', path2, exe2, name1);
             this.players = new IPlayer[2] { player1, player2 };
             this.currentPlayer = this.players[0];
         }
@@ -79,9 +86,10 @@ namespace Glass
         private status NewStep(IPlayer player)
         {
             int newStep = player.Step(this.amountOfSteps);
+            Application.DoEvents();
             bool IsValid = this.field.ChangeCell(newStep, player.xORo);
             if (!IsValid) {
-                MessageBox.Show("Неправильный ход!");
+                //MessageBox.Show("Неправильный ход!");
                 return status.invalidStep;
             }
 

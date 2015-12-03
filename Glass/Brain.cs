@@ -14,36 +14,19 @@ namespace Glass
         string Path { get; }
         List<int> AllSteps { get; }
         int Step(int amountOfSteps);
+        string Name { get; }
     }
 
-    class RandomBrain : IPlayer
-    {
-        public RandomBrain(char xORo)
-        {
-            this.sym = xORo;
-        }
-        private char sym;
-        public char xORo { get { return this.sym; } }
-        public string Path { get { return null; } }
-        public List<int> AllSteps { get { return new List<int>(); } }
-
-        public int Step(int amountOfSteps)
-        {
-            int step = Form1.RandGen.Next(0, 10);
-            //MessageBox.Show(step.ToString());
-            Thread.Sleep(20);
-            return step;
-        }
-    }
 
     class Brain : IPlayer
     {
-        public Brain(char xORo, string path, string exe)
+        public Brain(char xORo, string path, string name, string exe)
         {
             this.sym = xORo;
             this.path = path;
             this.exe = exe;
             this.allSteps = new List<int>();
+            this.name = name;
         }
 
         private string path;
@@ -51,6 +34,8 @@ namespace Glass
         private List<int> allSteps;
         public List<int> AllSteps { get { return this.allSteps; } }
         private string exe;
+        private string name;
+        public string Name { get { return this.name; } }
         private char sym;
         public char xORo { get { return this.sym; } }
 
@@ -72,11 +57,11 @@ namespace Glass
                     step = -1;
                     return step;
                 }
-                Thread.Sleep(TimeSpan.FromMilliseconds(50));
+                Thread.Sleep(100);
             }
 
             proc.Close();
-            Thread.Sleep(TimeSpan.FromMilliseconds(10));
+            Thread.Sleep(10);
             text = File.ReadAllText(currentFile);
 
             bool result = Int32.TryParse(text, out step);
