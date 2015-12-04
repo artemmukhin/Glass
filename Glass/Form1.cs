@@ -16,7 +16,10 @@ namespace Glass
     public partial class Form1 : Form
     {
         List<Game> allGames = new List<Game>();
-        public static Random RandGen = new Random();
+        private string glassPath;
+        public string GlassPath { get { return this.glassPath; } }
+        private Dictionary<string, string> allBrains;
+        private string name1, name2, exe1, exe2;
 
         public Form1()
         {
@@ -25,6 +28,22 @@ namespace Glass
                 MessageBox.Show(@"Не найден конфигурационный файл config.txt");
                 Environment.Exit(0);
             }
+
+            StreamReader configFile = new StreamReader(configFilePath);
+            this.glassPath = configFile.ReadLine();
+            string brain1 = configFile.ReadLine();
+            string brain2 = configFile.ReadLine();
+            string delimStr = " ,";
+            char[] delimiter = delimStr.ToCharArray();
+
+            this.name1 = brain1.Split(delimiter, 2)[0];
+            this.exe1 = brain1.Split(delimiter, 2)[1];
+            this.name2 = brain2.Split(delimiter, 2)[0];
+            this.exe2 = brain2.Split(delimiter, 2)[1];
+
+            this.allBrains = new Dictionary<string, string>();
+            this.allBrains.Add(name1, exe1);
+            this.allBrains.Add(name2, exe2);
 
             InitializeComponent();
             //Game game = new Game(this.panel1, 1);
@@ -36,6 +55,8 @@ namespace Glass
             infoLabel.Location = new Point(20, 20);
             infoLabel.Text = "Для запуска новой игры нажмите на таб +";
             tabControl1.TabPages[0].Controls.Add(infoLabel);
+            this.stat_1.Text = name1;
+            this.stat_2.Text = name2;
 
             this.Show();
         }
@@ -96,9 +117,15 @@ namespace Glass
                 tabControl1.SelectedTab = createdTabPage;
                 newLabel.Show();
                 // создаём новую игру
-                Game newGame = new Game(newPanel, newLabel, numberOfNewTab);
+                Game newGame = new Game(newPanel, newLabel, numberOfNewTab, this.glassPath,
+                    this.name1, this.exe1, this.name2, this.exe2);
+
                 this.allGames.Add(newGame);
                 newGame.StartGame();
+                if (this.allGames[this.allGames.Count - 1].Winner == this.name1)
+                    this.stat_1_count.Text = (int.Parse(this.stat_1_count.Text) + 1).ToString();
+                else
+                    this.stat_2_count.Text = (int.Parse(this.stat_2_count.Text) + 1).ToString();
             }
         }
 

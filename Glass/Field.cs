@@ -1,5 +1,4 @@
-﻿
-namespace Glass
+﻿namespace Glass
 {
     class Field
     {

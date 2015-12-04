@@ -45,25 +45,24 @@ namespace Glass
             int timelimit = 5000;
             string text;
             string currentFile = this.path + this.sym + amountOfSteps + ".txt";
-
             string CLArguments = this.path + " " + this.sym + " " + timelimit;
+            MessageBox.Show(CLArguments);
 
             Process proc = Process.Start(this.exe, CLArguments);
 
             var timeout = DateTime.Now.Add(TimeSpan.FromMilliseconds(timelimit));
-            while (!File.Exists(currentFile)) {
-                if (DateTime.Now > timeout) {
-                    MessageBox.Show("AI timeout");
-                    step = -1;
-                    return step;
-                }
-                Thread.Sleep(100);
+            while (!File.Exists(currentFile) && DateTime.Now < timeout)
+                Application.DoEvents();
+
+            proc.Kill();
+            if (!File.Exists(currentFile)) {
+                MessageBox.Show("AI timeout");
+                step = -1;
+                return step;
             }
 
-            proc.Close();
-            Thread.Sleep(10);
+            Thread.Sleep(20);
             text = File.ReadAllText(currentFile);
-
             bool result = Int32.TryParse(text, out step);
             if (!result) {
                 step = -1;

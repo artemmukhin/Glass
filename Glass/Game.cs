@@ -6,7 +6,8 @@ namespace Glass
 {
     class Game
     {
-        public Game(Panel panel, Label label, int numberOfGame)
+        public Game(Panel panel, Label label, int numberOfGame, string glassPath,
+            string name1, string exe1, string name2, string exe2)
         {
             this.amountOfSteps = 0;
             this.numberOfStep = 0;
@@ -14,20 +15,11 @@ namespace Glass
             this.label = label;
             this.field = new Field();
             this.numberOfGame = numberOfGame;
+            this.glassPath = glassPath;
 
             //string configFilePath = @"C:\config.txt";
-            string configFilePath = Directory.GetCurrentDirectory() + @"\config.txt";
-            StreamReader configFile = new StreamReader(configFilePath);
-            this.glassPath = configFile.ReadLine();
-            string brain1 = configFile.ReadLine();
-            string brain2 = configFile.ReadLine();
-            string delimStr = " ,";
-            char[] delimiter = delimStr.ToCharArray();
 
-            string exe1 = brain1.Split(delimiter, 2)[0];
-            string name1 = brain1.Split(delimiter, 2)[1];
-            string exe2 = brain2.Split(delimiter, 2)[0];
-            string name2 = brain2.Split(delimiter, 2)[1];
+            //MessageBox.Show("Brains: " + exe1 + "\nLast player: " + exe2);
 
             string path1 = glassPath + Convert.ToString(numberOfGame) + @"\X\";
             string path2 = glassPath + Convert.ToString(numberOfGame) + @"\O\";
@@ -36,8 +28,8 @@ namespace Glass
             Directory.CreateDirectory(path1);
             Directory.CreateDirectory(path2);
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-            this.player1 = new Brain('X', path1, exe1, name1);
-            this.player2 = new Brain('O', path2, exe2, name1);
+            this.player1 = new Brain('X', path1, name1, exe1);
+            this.player2 = new Brain('O', path2, name2, exe2);
             this.players = new IPlayer[2] { player1, player2 };
             this.currentPlayer = this.players[0];
         }
@@ -55,7 +47,8 @@ namespace Glass
         private string glassPath, logPath;
         public string GlassPath { get { return glassPath; } }
         public string LogPath { get { return logPath; } }
-
+        private string winner;
+        public string Winner { get { return this.winner; } }
 
         public void StartGame()
         {
@@ -72,13 +65,17 @@ namespace Glass
             if (currentStatus != status.notFinished) {
                 if (currentStatus == status.player1Win) {
                     this.label.Text = "Игрок Х победил!";
+                    this.winner = this.player1.Name;
                 }
                 else if (currentStatus == status.player2Win) {
                     this.label.Text = "Игрок О победил!";
+                    this.winner = this.player2.Name;
                 }
-                else if (currentStatus == status.invalidStep)
+                else if (currentStatus == status.invalidStep) {
                     this.label.Text = String.Format("Игрок {0} сходил неправильно. Игрок {1} победил!",
-                        Char.ToUpper(currentPlayer.xORo), Char.ToUpper(players[this.numberOfStep % 2].xORo));
+                        Char.ToUpper(currentPlayer.xORo), Char.ToUpper(this.players[this.numberOfStep % 2].xORo));
+                    this.winner = this.players[this.numberOfStep % 2].Name;
+                }
             }
             //MessageBox.Show("Amount of steps: " + this.amountOfSteps + "\nLast player: " + this.currentPlayer.xORo);
         }
@@ -86,7 +83,7 @@ namespace Glass
         private status NewStep(IPlayer player)
         {
             int newStep = player.Step(this.amountOfSteps);
-            Application.DoEvents();
+            //Application.DoEvents();
             bool IsValid = this.field.ChangeCell(newStep, player.xORo);
             if (!IsValid) {
                 //MessageBox.Show("Неправильный ход!");
@@ -112,21 +109,35 @@ namespace Glass
         {
             int row, col;
             string currentRow;
-            string winStr1 = new string(this.player1.xORo, 5);
-            string winStr2 = new string(this.player2.xORo, 5);
+            status firstWin, lastWin;
+            string winStr1, winStr2;
+
+            // чтобы проверять сначала победу текущего игрока (по ТЗ)
+            if (currentPlayer == this.player1) {
+                firstWin = status.player1Win;
+                lastWin = status.player2Win;
+                winStr1 = new string(this.player1.xORo, 5);
+                winStr2 = new string(this.player2.xORo, 5);
+            }
+            else {
+                firstWin = status.player2Win;
+                lastWin = status.player1Win;
+                winStr1 = new string(this.player2.xORo, 5);
+                winStr2 = new string(this.player1.xORo, 5);
+            }
 
             // горизонтали
             for (row = 9; row >= 0; row--) {
                 currentRow = String.Join("", this.field.Cells[row]);
-                if (currentRow.Contains(winStr1)) return status.player1Win;
-                else if (currentRow.Contains(winStr2)) return status.player2Win;
+                if (currentRow.Contains(winStr1)) return firstWin;
+                else if (currentRow.Contains(winStr2)) return lastWin;
             }
 
             // вертикали
             string currentCol = "";
             for (row = 0; row < 10; row++) currentCol += this.field.Cells[row][changedCol];
-            if (currentCol.Contains(winStr1)) return status.player1Win;
-            if (currentCol.Contains(winStr2)) return status.player2Win;
+            if (currentCol.Contains(winStr1)) return firstWin;
+            if (currentCol.Contains(winStr2)) return lastWin;
 
             // диагонали
             // справа-налево
@@ -135,30 +146,31 @@ namespace Glass
             for (firstCol = 4, currentDiag = ""; firstCol <= 9; firstCol++) {
                 for (col = firstCol, row = 0; col >= 0; row++, col--)
                     currentDiag += this.field.Cells[row][col];
-                if (currentDiag.Contains(winStr1)) return status.player1Win;
-                if (currentDiag.Contains(winStr2)) return status.player2Win;
+                if (currentDiag.Contains(winStr1)) return firstWin;
+                if (currentDiag.Contains(winStr2)) return lastWin;
             }
             // ниже главной
-            for (firstRow = 1, currentDiag = ""; firstRow >= 5; firstRow++) {
+            for (firstRow = 1, currentDiag = ""; firstRow <= 5; firstRow++) {
                 for (col = 9, row = firstRow; row <= 9; row++, col--)
                     currentDiag += this.field.Cells[row][col];
-                if (currentDiag.Contains(winStr1)) return status.player1Win;
-                if (currentDiag.Contains(winStr2)) return status.player2Win;
+                if (firstRow == 1) MessageBox.Show(currentDiag);
+                if (currentDiag.Contains(winStr1)) return firstWin;
+                if (currentDiag.Contains(winStr2)) return lastWin;
             }
 
             // слева-направо
             for (firstCol = 5, currentDiag = ""; firstCol >= 0; firstCol--) {
                 for (col = firstCol, row = 0; col <= 9; row++, col++)
                     currentDiag += this.field.Cells[row][col];
-                if (currentDiag.Contains(winStr1)) return status.player1Win;
-                if (currentDiag.Contains(winStr2)) return status.player2Win;
+                if (currentDiag.Contains(winStr1)) return firstWin;
+                if (currentDiag.Contains(winStr2)) return lastWin;
             }
             // ниже главной
             for (firstRow = 1, currentDiag = ""; firstRow >= 5; firstRow++) {
                 for (col = 0, row = firstRow; row <= 9; row++, col++)
                     currentDiag += this.field.Cells[row][col];
-                if (currentDiag.Contains(winStr1)) return status.player1Win;
-                if (currentDiag.Contains(winStr2)) return status.player2Win;
+                if (currentDiag.Contains(winStr1)) return firstWin;
+                if (currentDiag.Contains(winStr2)) return lastWin;
             }
 
             return status.notFinished;
