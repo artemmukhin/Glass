@@ -153,7 +153,6 @@ namespace Glass
             for (firstRow = 1, currentDiag = ""; firstRow <= 5; firstRow++) {
                 for (col = 9, row = firstRow; row <= 9; row++, col--)
                     currentDiag += this.field.Cells[row][col];
-                if (firstRow == 1) MessageBox.Show(currentDiag);
                 if (currentDiag.Contains(winStr1)) return firstWin;
                 if (currentDiag.Contains(winStr2)) return lastWin;
             }

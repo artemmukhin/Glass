@@ -46,7 +46,6 @@ namespace Glass
             string text;
             string currentFile = this.path + this.sym + amountOfSteps + ".txt";
             string CLArguments = this.path + " " + this.sym + " " + timelimit;
-            MessageBox.Show(CLArguments);
 
             Process proc = Process.Start(this.exe, CLArguments);
 
