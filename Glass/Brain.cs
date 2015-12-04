@@ -53,11 +53,12 @@ namespace Glass
             while (!File.Exists(currentFile) && DateTime.Now < timeout)
                 Application.DoEvents();
 
-            proc.Kill();
+            proc.Close();
             if (!File.Exists(currentFile)) {
                 MessageBox.Show("AI timeout");
                 step = -1;
                 this.allSteps.Add(step);
+                try { proc.Kill(); } catch { }
                 return step;
             }
 
@@ -67,7 +68,7 @@ namespace Glass
             if (!result) {
                 step = -1;
             }
-            
+
             this.allSteps.Add(step);
             return step;
         }
