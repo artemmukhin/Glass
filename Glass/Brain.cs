@@ -58,6 +58,7 @@ namespace Glass
             if (!File.Exists(currentFile)) {
                 MessageBox.Show("AI timeout");
                 step = -1;
+                this.allSteps.Add(step);
                 return step;
             }
 

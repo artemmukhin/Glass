@@ -182,6 +182,7 @@ namespace Glass
                 MessageBox.Show("нет предыдущего");
                 return;
             }
+
             int lastStep = this.currentPlayer.AllSteps[this.amountOfSteps - 1];
             this.field.DeleteCell(lastStep);
             this.panel.Refresh();

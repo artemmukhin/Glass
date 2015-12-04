@@ -46,6 +46,7 @@
         // для предыдущего хода
         public void DeleteCell(int col)
         {
+            if (col == -1) return; // если был таймаут
             // Переделать для удаления последнего хода!
             int start = ((col == 4 || col == 5) ? 8 : 9);
 
