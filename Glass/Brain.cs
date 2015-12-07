@@ -20,13 +20,14 @@ namespace Glass
 
     class Brain : IPlayer
     {
-        public Brain(char xORo, string path, string name, string exe)
+        public Brain(char xORo, string path, string name, string exe, int timelimit)
         {
             this.sym = xORo;
             this.path = path;
             this.exe = exe;
             this.allSteps = new List<int>();
             this.name = name;
+            this.timelimit = timelimit;
         }
 
         private string path;
@@ -38,18 +39,18 @@ namespace Glass
         public string Name { get { return this.name; } }
         private char sym;
         public char xORo { get { return this.sym; } }
+        private int timelimit;
 
         public int Step(int amountOfSteps)
         {
             int step = 0;
-            int timelimit = 5000;
             string text;
             string currentFile = this.path + this.sym + amountOfSteps + ".txt";
-            string CLArguments = this.path + " " + this.sym + " " + timelimit;
+            string CLArguments = this.path + " " + this.sym + " " + this.timelimit;
 
             Process proc = Process.Start(this.exe, CLArguments);
 
-            var timeout = DateTime.Now.Add(TimeSpan.FromMilliseconds(timelimit));
+            var timeout = DateTime.Now.Add(TimeSpan.FromMilliseconds(this.timelimit));
             while (!File.Exists(currentFile) && DateTime.Now < timeout)
                 Application.DoEvents();
 

@@ -29,15 +29,13 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.stat_2_count = new System.Windows.Forms.Label();
+            this.stat_1_count = new System.Windows.Forms.Label();
             this.stat_2 = new System.Windows.Forms.Label();
             this.stat_1 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            //this.button2 = new System.Windows.Forms.Button();
-            //this.button1 = new System.Windows.Forms.Button();
             this.infoLabel = new System.Windows.Forms.Label();
             this.newTabPage = new System.Windows.Forms.TabPage();
-            this.stat_1_count = new System.Windows.Forms.Label();
-            this.stat_2_count = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +48,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(317, 295);
+            this.tabControl1.Size = new System.Drawing.Size(444, 422);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.ChangeTab);
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
@@ -62,16 +60,32 @@
             this.tabPage1.Controls.Add(this.stat_2);
             this.tabPage1.Controls.Add(this.stat_1);
             this.tabPage1.Controls.Add(this.label1);
-            //this.tabPage1.Controls.Add(this.button2);
-            //this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.infoLabel);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(309, 269);
+            this.tabPage1.Size = new System.Drawing.Size(436, 396);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // stat_2_count
+            // 
+            this.stat_2_count.AutoSize = true;
+            this.stat_2_count.Location = new System.Drawing.Point(160, 102);
+            this.stat_2_count.Name = "stat_2_count";
+            this.stat_2_count.Size = new System.Drawing.Size(13, 13);
+            this.stat_2_count.TabIndex = 6;
+            this.stat_2_count.Text = "0";
+            // 
+            // stat_1_count
+            // 
+            this.stat_1_count.AutoSize = true;
+            this.stat_1_count.Location = new System.Drawing.Point(160, 89);
+            this.stat_1_count.Name = "stat_1_count";
+            this.stat_1_count.Size = new System.Drawing.Size(13, 13);
+            this.stat_1_count.TabIndex = 5;
+            this.stat_1_count.Text = "0";
             // 
             // stat_2
             // 
@@ -101,28 +115,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Статистика";
             // 
-            // button2
-            // 
-            /*
-            this.button2.Location = new System.Drawing.Point(44, 235);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(27, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = ">";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.nextStep_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(9, 235);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(27, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "<";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.prevStep_Click);
-            */
-            // 
             // infoLabel
             // 
             this.infoLabel.AutoSize = true;
@@ -142,29 +134,11 @@
             this.newTabPage.Text = "+";
             this.newTabPage.UseVisualStyleBackColor = true;
             // 
-            // stat_1_count
-            // 
-            this.stat_1_count.AutoSize = true;
-            this.stat_1_count.Location = new System.Drawing.Point(160, 89);
-            this.stat_1_count.Name = "stat_1_count";
-            this.stat_1_count.Size = new System.Drawing.Size(13, 13);
-            this.stat_1_count.TabIndex = 5;
-            this.stat_1_count.Text = "0";
-            // 
-            // stat_2_count
-            // 
-            this.stat_2_count.AutoSize = true;
-            this.stat_2_count.Location = new System.Drawing.Point(160, 102);
-            this.stat_2_count.Name = "stat_2_count";
-            this.stat_2_count.Size = new System.Drawing.Size(13, 13);
-            this.stat_2_count.TabIndex = 6;
-            this.stat_2_count.Text = "0";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(317, 295);
+            this.ClientSize = new System.Drawing.Size(444, 422);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";

@@ -1,3 +1,5 @@
 C:\Users\Administrator\prog\glass\
 Alice C:\Users\Administrator\prog\SimpleBrain.exe
 Bob C:\Users\Administrator\prog\SimpleBrain.exe
+5000
+5000

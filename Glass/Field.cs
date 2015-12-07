@@ -1,4 +1,6 @@
-﻿namespace Glass
+﻿using System.Collections.Generic;
+
+namespace Glass
 {
     class Field
     {
@@ -6,6 +8,7 @@
         public char[][] Cells { get { return cells; } }
         private int[] freeCells;
         //public int[] FreeCells { get { return freeCells; } }
+        public int[,] winCells;
 
         public Field()
         {
@@ -22,6 +25,12 @@
             }
             this.cells[9][4] = '-';
             this.cells[9][5] = '-';
+
+            this.winCells = new int[5,2];
+            for (int i = 0; i < 5; i++) {
+                this.winCells[i, 0] = -1;
+                this.winCells[i, 1] = -1;
+            }
         }
 
         public bool ChangeCell(int col, char xORo)
@@ -47,9 +56,8 @@
         public void DeleteCell(int col)
         {
             if (col == -1) return; // если был таймаут
-            // Переделать для удаления последнего хода!
-            int start = ((col == 4 || col == 5) ? 8 : 9);
 
+            int start = ((col == 4 || col == 5) ? 8 : 9);
             for (int row = start; row > 0; row--) {
                 this.cells[row][col] = this.cells[row-1][col];
             }
