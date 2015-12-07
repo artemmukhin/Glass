@@ -66,61 +66,66 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(436, 396);
             this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Статистика";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // stat_2_count
             // 
             this.stat_2_count.AutoSize = true;
-            this.stat_2_count.Location = new System.Drawing.Point(160, 102);
+            this.stat_2_count.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.stat_2_count.Location = new System.Drawing.Point(160, 109);
             this.stat_2_count.Name = "stat_2_count";
-            this.stat_2_count.Size = new System.Drawing.Size(13, 13);
+            this.stat_2_count.Size = new System.Drawing.Size(18, 20);
             this.stat_2_count.TabIndex = 6;
             this.stat_2_count.Text = "0";
             // 
             // stat_1_count
             // 
             this.stat_1_count.AutoSize = true;
+            this.stat_1_count.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.stat_1_count.Location = new System.Drawing.Point(160, 89);
             this.stat_1_count.Name = "stat_1_count";
-            this.stat_1_count.Size = new System.Drawing.Size(13, 13);
+            this.stat_1_count.Size = new System.Drawing.Size(18, 20);
             this.stat_1_count.TabIndex = 5;
             this.stat_1_count.Text = "0";
             // 
             // stat_2
             // 
             this.stat_2.AutoSize = true;
-            this.stat_2.Location = new System.Drawing.Point(27, 102);
+            this.stat_2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.stat_2.Location = new System.Drawing.Point(27, 109);
             this.stat_2.Name = "stat_2";
-            this.stat_2.Size = new System.Drawing.Size(47, 13);
+            this.stat_2.Size = new System.Drawing.Size(66, 20);
             this.stat_2.TabIndex = 4;
             this.stat_2.Text = "Игрок 2";
             // 
             // stat_1
             // 
             this.stat_1.AutoSize = true;
+            this.stat_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.stat_1.Location = new System.Drawing.Point(27, 89);
             this.stat_1.Name = "stat_1";
-            this.stat_1.Size = new System.Drawing.Size(47, 13);
+            this.stat_1.Size = new System.Drawing.Size(66, 20);
             this.stat_1.TabIndex = 3;
             this.stat_1.Text = "Игрок 1";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(23, 65);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(27, 56);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 20);
+            this.label1.Size = new System.Drawing.Size(124, 24);
             this.label1.TabIndex = 2;
             this.label1.Text = "Статистика";
             // 
             // infoLabel
             // 
             this.infoLabel.AutoSize = true;
+            this.infoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.infoLabel.Location = new System.Drawing.Point(20, 20);
             this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(225, 13);
+            this.infoLabel.Size = new System.Drawing.Size(328, 20);
             this.infoLabel.TabIndex = 0;
             this.infoLabel.Text = "Для запуска новой игры нажмите на таб +";
             // 

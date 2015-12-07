@@ -65,6 +65,7 @@ namespace Glass
             Label infoLabel = new Label();
             infoLabel.AutoSize = true;
             infoLabel.Location = new Point(20, 20);
+            infoLabel.Font = new Font("Microsoft Sans Serif", 12F);
             infoLabel.Text = "Для запуска новой игры нажмите на таб +";
             tabControl1.TabPages[0].Controls.Add(infoLabel);
             this.stat_1.Text = name1;
@@ -81,7 +82,7 @@ namespace Glass
                 // создаём новый таб
                 TabPage createdTabPage = new TabPage();
                 createdTabPage.Name = "tabPage" + numberOfNewTab;
-                createdTabPage.Text = "Game #" + numberOfNewTab;
+                createdTabPage.Text = "Игра " + numberOfNewTab;
                 createdTabPage.UseVisualStyleBackColor = true;
 
                 // создаём новую панель

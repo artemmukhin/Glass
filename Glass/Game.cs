@@ -179,47 +179,107 @@ namespace Glass
             // справа-налево
             string currentDiag;
             int firstCol, firstRow;
-            for (firstCol = 4, currentDiag = ""; firstCol <= 9; firstCol++) {
+            for (firstCol = 4; firstCol <= 9; firstCol++) {
+                currentDiag = "";
                 for (col = firstCol, row = 0; col >= 0; row++, col--)
                     currentDiag += this.field.Cells[row][col];
                 if (currentDiag.Contains(winStr1)) {
+                    int winStartRow = currentDiag.IndexOf(winStr1);
+                    int winStartCol = firstCol - currentDiag.IndexOf(winStr1);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c--) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return firstWin;
                 }
                 if (currentDiag.Contains(winStr2)) {
+                    int winStartRow = currentDiag.IndexOf(winStr2);
+                    int winStartCol = firstCol - currentDiag.IndexOf(winStr2);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c--) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return lastWin;
                 }
             }
             // ниже главной
-            for (firstRow = 1, currentDiag = ""; firstRow <= 5; firstRow++) {
+            for (firstRow = 1; firstRow <= 5; firstRow++) {
+                currentDiag = "";
                 for (col = 9, row = firstRow; row <= 9; row++, col--)
                     currentDiag += this.field.Cells[row][col];
                 if (currentDiag.Contains(winStr1)) {
+                    int winStartRow = firstRow + currentDiag.IndexOf(winStr1);
+                    int winStartCol = 9 - currentDiag.IndexOf(winStr1);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c--) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return firstWin;
                 }
                 if (currentDiag.Contains(winStr2)) {
+                    int winStartRow = firstRow + currentDiag.IndexOf(winStr2);
+                    int winStartCol = 9 - currentDiag.IndexOf(winStr2);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c--) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return lastWin;
                 }
             }
 
             // слева-направо
-            for (firstCol = 5, currentDiag = ""; firstCol >= 0; firstCol--) {
+            for (firstCol = 5; firstCol >= 0; firstCol--) {
+                currentDiag = "";
                 for (col = firstCol, row = 0; col <= 9; row++, col++)
                     currentDiag += this.field.Cells[row][col];
                 if (currentDiag.Contains(winStr1)) {
+                    int winStartRow = currentDiag.IndexOf(winStr1);
+                    int winStartCol = firstCol + currentDiag.IndexOf(winStr1);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c++) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return firstWin;
                 }
                 if (currentDiag.Contains(winStr2)) {
+                    int winStartRow = currentDiag.IndexOf(winStr2);
+                    int winStartCol = firstCol + currentDiag.IndexOf(winStr2);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c++) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return lastWin;
                 }
             }
             // ниже главной
-            for (firstRow = 1, currentDiag = ""; firstRow >= 5; firstRow++) {
+            for (firstRow = 1; firstRow >= 5; firstRow++) {
+                currentDiag = "";
                 for (col = 0, row = firstRow; row <= 9; row++, col++)
                     currentDiag += this.field.Cells[row][col];
                 if (currentDiag.Contains(winStr1)) {
+                    int winStartRow = firstRow + currentDiag.IndexOf(winStr1);
+                    int winStartCol = currentDiag.IndexOf(winStr1);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c++) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return firstWin;
                 }
                 if (currentDiag.Contains(winStr2)) {
+                    int winStartRow = firstRow + currentDiag.IndexOf(winStr2);
+                    int winStartCol = currentDiag.IndexOf(winStr2);
+                    int r, c;
+                    for (r = winStartRow, c = winStartCol; r < winStartRow + 5; r++, c++) {
+                        this.field.winCells[r - winStartRow, 0] = r;
+                        this.field.winCells[r - winStartRow, 1] = c;
+                    }
                     return lastWin;
                 }
             }
