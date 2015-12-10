@@ -119,6 +119,7 @@ namespace Glass
             string currentRow;
             status firstWin, lastWin;
             string winStr1, winStr2;
+            status result = status.notFinished;
 
             // чтобы проверять сначала победу текущего игрока (по ТЗ)
             if (currentPlayer == this.player1) {
@@ -143,7 +144,7 @@ namespace Glass
                         this.field.winCells[c - winStartCol, 0] = row;
                         this.field.winCells[c - winStartCol, 1] = c;
                     }
-                    return firstWin;
+                    result = firstWin;
                 }
                 else if (currentRow.Contains(winStr2)) {
                     int winStartCol = currentRow.IndexOf(winStr2);
@@ -151,7 +152,7 @@ namespace Glass
                         this.field.winCells[c - winStartCol, 0] = row;
                         this.field.winCells[c - winStartCol, 1] = c;
                     }
-                    return lastWin;
+                    result = lastWin;
                 }
             }
 
@@ -164,15 +165,15 @@ namespace Glass
                     this.field.winCells[r - winStartRow, 0] = r;
                     this.field.winCells[r - winStartRow, 1] = changedCol;
                 }
-                return firstWin;
+                result = firstWin;
             }
-            if (currentCol.Contains(winStr2)) {
+            else if (currentCol.Contains(winStr2)) {
                 int winStartRow = currentCol.IndexOf(winStr2);
                 for (int r = winStartRow; r < winStartRow + 5; r++) {
                     this.field.winCells[r - winStartRow, 0] = r;
                     this.field.winCells[r - winStartRow, 1] = changedCol;
                 }
-                return lastWin;
+                if (result != firstWin) result = lastWin;
             }
 
             // диагонали
@@ -183,6 +184,7 @@ namespace Glass
                 currentDiag = "";
                 for (col = firstCol, row = 0; col >= 0; row++, col--)
                     currentDiag += this.field.Cells[row][col];
+
                 if (currentDiag.Contains(winStr1)) {
                     int winStartRow = currentDiag.IndexOf(winStr1);
                     int winStartCol = firstCol - currentDiag.IndexOf(winStr1);
@@ -191,9 +193,9 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return firstWin;
+                    result = firstWin;
                 }
-                if (currentDiag.Contains(winStr2)) {
+                else if (currentDiag.Contains(winStr2)) {
                     int winStartRow = currentDiag.IndexOf(winStr2);
                     int winStartCol = firstCol - currentDiag.IndexOf(winStr2);
                     int r, c;
@@ -201,7 +203,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return lastWin;
+                    if (result != firstWin) result = lastWin;
                 }
             }
             // ниже главной
@@ -209,6 +211,7 @@ namespace Glass
                 currentDiag = "";
                 for (col = 9, row = firstRow; row <= 9; row++, col--)
                     currentDiag += this.field.Cells[row][col];
+
                 if (currentDiag.Contains(winStr1)) {
                     int winStartRow = firstRow + currentDiag.IndexOf(winStr1);
                     int winStartCol = 9 - currentDiag.IndexOf(winStr1);
@@ -217,9 +220,9 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return firstWin;
+                    result = firstWin;
                 }
-                if (currentDiag.Contains(winStr2)) {
+                else if (currentDiag.Contains(winStr2)) {
                     int winStartRow = firstRow + currentDiag.IndexOf(winStr2);
                     int winStartCol = 9 - currentDiag.IndexOf(winStr2);
                     int r, c;
@@ -227,7 +230,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return lastWin;
+                    if (result != firstWin) result = lastWin;
                 }
             }
 
@@ -236,6 +239,7 @@ namespace Glass
                 currentDiag = "";
                 for (col = firstCol, row = 0; col <= 9; row++, col++)
                     currentDiag += this.field.Cells[row][col];
+
                 if (currentDiag.Contains(winStr1)) {
                     int winStartRow = currentDiag.IndexOf(winStr1);
                     int winStartCol = firstCol + currentDiag.IndexOf(winStr1);
@@ -244,9 +248,9 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return firstWin;
+                    result = firstWin;
                 }
-                if (currentDiag.Contains(winStr2)) {
+                else if (currentDiag.Contains(winStr2)) {
                     int winStartRow = currentDiag.IndexOf(winStr2);
                     int winStartCol = firstCol + currentDiag.IndexOf(winStr2);
                     int r, c;
@@ -254,7 +258,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return lastWin;
+                    if (result != firstWin) result = lastWin;
                 }
             }
             // ниже главной
@@ -262,6 +266,7 @@ namespace Glass
                 currentDiag = "";
                 for (col = 0, row = firstRow; row <= 9; row++, col++)
                     currentDiag += this.field.Cells[row][col];
+
                 if (currentDiag.Contains(winStr1)) {
                     int winStartRow = firstRow + currentDiag.IndexOf(winStr1);
                     int winStartCol = currentDiag.IndexOf(winStr1);
@@ -270,7 +275,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return firstWin;
+                    result = firstWin;
                 }
                 if (currentDiag.Contains(winStr2)) {
                     int winStartRow = firstRow + currentDiag.IndexOf(winStr2);
@@ -280,17 +285,16 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    return lastWin;
+                    if (result != firstWin) result = lastWin;
                 }
             }
-
-            return status.notFinished;
+            return result;
         }
 
         public void prevStep()
         {
             if (this.amountOfSteps == 0) {
-                MessageBox.Show("нет предыдущего");
+                //MessageBox.Show("нет предыдущего");
                 return;
             }
 
@@ -322,7 +326,7 @@ namespace Glass
                 this.currentPlayer = oldPlayer;
                 this.amountOfSteps = oldAmountOfSteps;
                 this.numberOfStep--;
-                MessageBox.Show("нет следующего");
+                //MessageBox.Show("нет следующего");
                 return;
             }
         }

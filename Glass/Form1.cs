@@ -19,7 +19,6 @@ namespace Glass
         List<Game> allGames = new List<Game>();
         private string glassPath;
         public string GlassPath { get { return this.glassPath; } }
-        private Dictionary<string, string> allBrains;
         private int timelimit1, timelimit2;
         private string name1, name2, exe1, exe2;
         Image Ximage, Oimage, XimageWin, OimageWin;
@@ -48,29 +47,14 @@ namespace Glass
             this.timelimit1 = int.Parse(time1);
             this.timelimit2 = int.Parse(time2);
 
-            this.allBrains = new Dictionary<string, string>();
-            this.allBrains.Add(name1, exe1);
-            this.allBrains.Add(name2, exe2);
-
             Ximage = Image.FromFile("X.png");
             Oimage = Image.FromFile("O.png");
             XimageWin = Image.FromFile("Xwin.png");
             OimageWin = Image.FromFile("Owin.png");
 
             InitializeComponent();
-            //Game game = new Game(this.panel1, 1);
-            //this.allGames.Add(game);
-            //game.StartGame();
-
-            Label infoLabel = new Label();
-            infoLabel.AutoSize = true;
-            infoLabel.Location = new Point(20, 20);
-            infoLabel.Font = new Font("Microsoft Sans Serif", 12F);
-            infoLabel.Text = "Для запуска новой игры нажмите на таб +";
-            tabControl1.TabPages[0].Controls.Add(infoLabel);
-            this.stat_1.Text = name1;
-            this.stat_2.Text = name2;
-
+            this.stat_1.Text = this.name1;
+            this.stat_2.Text = this.name2;
             this.Show();
         }
 
@@ -82,7 +66,7 @@ namespace Glass
                 // создаём новый таб
                 TabPage createdTabPage = new TabPage();
                 createdTabPage.Name = "tabPage" + numberOfNewTab;
-                createdTabPage.Text = "Игра " + numberOfNewTab;
+                createdTabPage.Text = "" + numberOfNewTab;
                 createdTabPage.UseVisualStyleBackColor = true;
 
                 // создаём новую панель
@@ -104,6 +88,7 @@ namespace Glass
                 //newLabel.Size = new Size(67, 13);
                 newLabel.Text = "Идёт игра...";
 
+                /*
                 // создаём новые кнопки прокрутки ходов
                 Button newPrevButton = new Button();
                 newPrevButton.Location = new Point(9, 360);
@@ -120,13 +105,14 @@ namespace Glass
                 newNextButton.Text = ">";
                 newNextButton.UseVisualStyleBackColor = true;
                 newNextButton.Click += new EventHandler(this.nextStep_Click);
+                */
 
                 // добавляем таб и панель
                 //newPanel.Controls.Add(newLabel);
                 createdTabPage.Controls.Add(newPanel);
                 createdTabPage.Controls.Add(newLabel);
-                createdTabPage.Controls.Add(newPrevButton);
-                createdTabPage.Controls.Add(newNextButton);
+                //createdTabPage.Controls.Add(newPrevButton);
+                //createdTabPage.Controls.Add(newNextButton);
                 tabControl1.TabPages.Insert(numberOfNewTab, createdTabPage);
                 tabControl1.SelectedTab = createdTabPage;
                 newLabel.Show();

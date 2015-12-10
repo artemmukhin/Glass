@@ -48,7 +48,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(444, 422);
+            this.tabControl1.Size = new System.Drawing.Size(384, 402);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.ChangeTab);
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
@@ -64,7 +64,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(436, 396);
+            this.tabPage1.Size = new System.Drawing.Size(376, 376);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Статистика";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -123,7 +123,7 @@
             // 
             this.infoLabel.AutoSize = true;
             this.infoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.infoLabel.Location = new System.Drawing.Point(20, 20);
+            this.infoLabel.Location = new System.Drawing.Point(8, 23);
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(328, 20);
             this.infoLabel.TabIndex = 0;
@@ -134,7 +134,7 @@
             this.newTabPage.Location = new System.Drawing.Point(4, 22);
             this.newTabPage.Name = "newTabPage";
             this.newTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.newTabPage.Size = new System.Drawing.Size(309, 269);
+            this.newTabPage.Size = new System.Drawing.Size(396, 376);
             this.newTabPage.TabIndex = 1;
             this.newTabPage.Text = "+";
             this.newTabPage.UseVisualStyleBackColor = true;
@@ -143,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 422);
+            this.ClientSize = new System.Drawing.Size(384, 402);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
