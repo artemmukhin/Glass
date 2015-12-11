@@ -262,7 +262,7 @@ namespace Glass
                 }
             }
             // ниже главной
-            for (firstRow = 1; firstRow >= 5; firstRow++) {
+            for (firstRow = 1; firstRow <= 5; firstRow++) {
                 currentDiag = "";
                 for (col = 0, row = firstRow; row <= 9; row++, col++)
                     currentDiag += this.field.Cells[row][col];
