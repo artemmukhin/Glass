@@ -5,13 +5,6 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
 
-
-/*
-To-do:
-    * подсветка выигрыша
-    * турнир
-*/
-
 namespace Glass
 {
     public partial class Form1 : Form

@@ -146,7 +146,7 @@ namespace Glass
                     }
                     result = firstWin;
                 }
-                else if (currentRow.Contains(winStr2)) {
+                else if (currentRow.Contains(winStr2) && (result != firstWin)) {
                     int winStartCol = currentRow.IndexOf(winStr2);
                     for (int c = winStartCol; c < winStartCol + 5; c++) {
                         this.field.winCells[c - winStartCol, 0] = row;
@@ -167,13 +167,13 @@ namespace Glass
                 }
                 result = firstWin;
             }
-            else if (currentCol.Contains(winStr2)) {
+            if (currentCol.Contains(winStr2) && (result != firstWin)) {
                 int winStartRow = currentCol.IndexOf(winStr2);
                 for (int r = winStartRow; r < winStartRow + 5; r++) {
                     this.field.winCells[r - winStartRow, 0] = r;
                     this.field.winCells[r - winStartRow, 1] = changedCol;
                 }
-                if (result != firstWin) result = lastWin;
+                result = lastWin;
             }
 
             // диагонали
@@ -195,7 +195,7 @@ namespace Glass
                     }
                     result = firstWin;
                 }
-                else if (currentDiag.Contains(winStr2)) {
+                if (currentDiag.Contains(winStr2) && (result != firstWin)) {
                     int winStartRow = currentDiag.IndexOf(winStr2);
                     int winStartCol = firstCol - currentDiag.IndexOf(winStr2);
                     int r, c;
@@ -203,7 +203,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    if (result != firstWin) result = lastWin;
+                    result = lastWin;
                 }
             }
             // ниже главной
@@ -222,7 +222,7 @@ namespace Glass
                     }
                     result = firstWin;
                 }
-                else if (currentDiag.Contains(winStr2)) {
+                if (currentDiag.Contains(winStr2) && (result != firstWin)) {
                     int winStartRow = firstRow + currentDiag.IndexOf(winStr2);
                     int winStartCol = 9 - currentDiag.IndexOf(winStr2);
                     int r, c;
@@ -230,7 +230,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    if (result != firstWin) result = lastWin;
+                    result = lastWin;
                 }
             }
 
@@ -250,7 +250,7 @@ namespace Glass
                     }
                     result = firstWin;
                 }
-                else if (currentDiag.Contains(winStr2)) {
+                if (currentDiag.Contains(winStr2) && (result != firstWin)) {
                     int winStartRow = currentDiag.IndexOf(winStr2);
                     int winStartCol = firstCol + currentDiag.IndexOf(winStr2);
                     int r, c;
@@ -258,7 +258,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    if (result != firstWin) result = lastWin;
+                    result = lastWin;
                 }
             }
             // ниже главной
@@ -277,7 +277,7 @@ namespace Glass
                     }
                     result = firstWin;
                 }
-                if (currentDiag.Contains(winStr2)) {
+                if (currentDiag.Contains(winStr2) && (result != firstWin)) {
                     int winStartRow = firstRow + currentDiag.IndexOf(winStr2);
                     int winStartCol = currentDiag.IndexOf(winStr2);
                     int r, c;
@@ -285,7 +285,7 @@ namespace Glass
                         this.field.winCells[r - winStartRow, 0] = r;
                         this.field.winCells[r - winStartRow, 1] = c;
                     }
-                    if (result != firstWin) result = lastWin;
+                    result = lastWin;
                 }
             }
             return result;
