@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Glass
+﻿namespace Glass
 {
     class Field
     {
         private char[][] cells;
         public char[][] Cells { get { return cells; } }
         private int[] freeCells;
-        //public int[] FreeCells { get { return freeCells; } }
         public int[,] winCells;
 
         public Field()
@@ -33,6 +30,12 @@ namespace Glass
             }
         }
 
+        /**
+        * Add X or O to coloumn
+        *
+        * @param  col   coloumn on which the move was made
+        * @return false if step is invalid, true if step is valid
+        */
         public bool ChangeCell(int col, char xORo)
         {
             if (col < 0 || col > 9) return false;
@@ -52,10 +55,16 @@ namespace Glass
             return true;
         }
 
-        // для предыдущего хода
+        /**
+        * Remove X or O from coloumn
+        * This method is used for rewind steps
+        *
+        * @param  col   coloumn on which the move was made
+        * @see  PrevStep()
+        */
         public void DeleteCell(int col)
         {
-            if (col == -1) return; // если был таймаут
+            if (col == -1) return; // if timeout
 
             int start = ((col == 4 || col == 5) ? 8 : 9);
             for (int row = start; row > 0; row--) {

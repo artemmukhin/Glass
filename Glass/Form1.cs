@@ -1,4 +1,30 @@
-﻿using System;
+﻿/**
+ * Driver for AI ("Connect Five" game).
+ * 
+ * This program shoud be used for Connect Five Competition.
+ * Connect Five is the game like Connect Four; for more information
+ * http://www.math.spbu.ru/user/chernishev/connectfive/connectfive.html
+ *
+ * @author Artem Mukhin
+ *
+ *
+ * Make sure config.txt is in the same path as exe file (driver) with following content:
+ * %path for the catalog where game data will be stored%
+ * %name of player1% %path for AI1%
+ * %name of player2% %path for AI2%
+ * %timelimit for player1%
+ * %timelimit for player2%
+ *
+ * Example of config.txt:
+ *  C:\Users\Administrator\games\
+ *  Alice C:\Users\Administrator\Alice.exe
+ *  Bob C:\Users\Administrator\Bob.exe
+ *  5000
+ *  5000
+ **/
+
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,9 +44,10 @@ namespace Glass
 
         public Form1()
         {
+            // open configuration file
             string configFilePath = Directory.GetCurrentDirectory() + @"\config.txt";
             if (!File.Exists(configFilePath)) {
-                MessageBox.Show(@"Не найден конфигурационный файл config.txt");
+                MessageBox.Show(@"Can't find file config.txt");
                 Environment.Exit(0);
             }
 
@@ -40,29 +67,33 @@ namespace Glass
             this.timelimit1 = int.Parse(time1);
             this.timelimit2 = int.Parse(time2);
 
+            // sprites X and O
             Ximage = Image.FromFile("X.png");
             Oimage = Image.FromFile("O.png");
             XimageWin = Image.FromFile("Xwin.png");
             OimageWin = Image.FromFile("Owin.png");
 
             InitializeComponent();
+
+            // player's names in stats
             this.stat_1.Text = this.name1;
             this.stat_2.Text = this.name2;
+
             this.Show();
         }
 
+        // Change current tab on click
         private void ChangeTab(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == newTabPage) {
                 int numberOfNewTab = tabControl1.TabPages.Count - 1;
 
-                // создаём новый таб
+                // create new tab, panel and label
                 TabPage createdTabPage = new TabPage();
                 createdTabPage.Name = "tabPage" + numberOfNewTab;
                 createdTabPage.Text = "" + numberOfNewTab;
                 createdTabPage.UseVisualStyleBackColor = true;
 
-                // создаём новую панель
                 Panel newPanel = new Panel();
                 newPanel.Name = "panel" + numberOfNewTab;
                 newPanel.Location = new Point(9, 7);
@@ -72,17 +103,17 @@ namespace Glass
                     BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                     null, newPanel, new object[] { true });
 
-                // создаём новую надпись
                 Label newLabel = new Label();
                 newLabel.AutoSize = true;
                 newLabel.Location = new Point(9, 330);
                 newLabel.Font = new Font("Microsoft Sans Serif", 12F);
                 newLabel.Name = "label" + numberOfNewTab;
                 //newLabel.Size = new Size(67, 13);
-                newLabel.Text = "Идёт игра...";
+                newLabel.Text = "Game in progress...";
+
+                // Uncomment these lines if you want back & forward buttons to switch between steps
 
                 /*
-                // создаём новые кнопки прокрутки ходов
                 Button newPrevButton = new Button();
                 newPrevButton.Location = new Point(9, 360);
                 newPrevButton.Name = "prevButton" + numberOfNewTab;
@@ -100,8 +131,7 @@ namespace Glass
                 newNextButton.Click += new EventHandler(this.nextStep_Click);
                 */
 
-                // добавляем таб и панель
-                //newPanel.Controls.Add(newLabel);
+                // add tab and a panel to TabPage
                 createdTabPage.Controls.Add(newPanel);
                 createdTabPage.Controls.Add(newLabel);
                 //createdTabPage.Controls.Add(newPrevButton);
@@ -109,12 +139,15 @@ namespace Glass
                 tabControl1.TabPages.Insert(numberOfNewTab, createdTabPage);
                 tabControl1.SelectedTab = createdTabPage;
                 newLabel.Show();
-                // создаём новую игру
+
+                // create new game
                 Game newGame = new Game(newPanel, newLabel, numberOfNewTab, this.glassPath,
                     this.name1, this.exe1, this.name2, this.exe2, this.timelimit1, this.timelimit2);
 
                 this.allGames.Add(newGame);
                 newGame.StartGame();
+
+                // show winner of game
                 if (this.allGames[this.allGames.Count - 1].Winner == this.name1)
                     this.stat_1_count.Text = (int.Parse(this.stat_1_count.Text) + 1).ToString();
                 else
@@ -127,6 +160,7 @@ namespace Glass
             DrawField(e.Graphics);
         }
 
+        // draw all cells of the field
         public void DrawField(Graphics g)
         {
             for (int row = 0; row < 10; row++) {
@@ -146,12 +180,13 @@ namespace Glass
 
         private void DrawCell(char cell, int row, int col, Graphics g, bool win)
         {
-            int x, y; // левый верхний угол клетки
+            int x, y; // upper left corner
             int cellWidth = 30, cellHeight = 30;
 
             x = col * cellWidth;
             y = row * cellHeight;
 
+            // '-' means dent (player can't place X or O on a dent)
             if (cell == '-') {
                 g.FillRectangle(Brushes.LightGray, x, y, cellWidth, cellHeight);
                 g.DrawRectangle(Pens.Black, x, y, cellWidth, cellHeight);
@@ -165,6 +200,7 @@ namespace Glass
                 else if (cell == 'O') g.DrawImage(this.Oimage, x + 6, y + 6);
 
             }
+            // green illumination of five marks in a row (winning position)
             else {
                 g.FillRectangle(Brushes.LightGreen, x, y, cellWidth, cellHeight);
                 g.DrawRectangle(Pens.Black, x, y, cellWidth, cellHeight);
@@ -186,7 +222,7 @@ namespace Glass
 
         private void Form1_Closing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Вы уверены?", "Glass",
+            if (MessageBox.Show("Are you sure?", "Glass",
                 MessageBoxButtons.YesNo) == DialogResult.No) {
                     e.Cancel = true;
             }
@@ -194,11 +230,12 @@ namespace Glass
             int numberOfGame;
             foreach (Game game in this.allGames) {
                 numberOfGame = Directory.GetDirectories(game.LogPath).Length + 1;
-                if (Directory.Exists(game.GlassPath)) // юзер мог уже удалить каталог
+                if (Directory.Exists(game.GlassPath))
                     Directory.Move(game.GlassPath, game.LogPath + "game" + numberOfGame);
             }
         }
 
+        // switch between steps using J and K keys
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.J)

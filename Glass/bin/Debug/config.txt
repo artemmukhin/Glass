@@ -1,5 +1,5 @@
-C:\Users\Administrator\prog\glass\
-Alice C:\Users\Administrator\prog\SimpleBrain1.exe
-Bob C:\Users\Administrator\prog\SimpleBrain1.exe
+C:\Users\ortem\Documents\prog\glass\
+Alice C:\Users\ortem\Documents\prog\glass\SimpleBrain.exe
+Bob C:\Users\ortem\Documents\prog\glass\SimpleBrain.exe
 5000
 5000

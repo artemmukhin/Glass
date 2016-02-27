@@ -19,10 +19,6 @@ namespace Glass
             this.timelimit1 = timelimit1;
             this.timelimit2 = timelimit2;
 
-            //string configFilePath = @"C:\config.txt";
-
-            //MessageBox.Show("Brains: " + exe1 + "\nLast player: " + exe2);
-
             string path1 = glassPath + Convert.ToString(numberOfGame) + @"\X\";
             string path2 = glassPath + Convert.ToString(numberOfGame) + @"\O\";
             this.logPath = glassPath + @"\log\";
@@ -42,24 +38,25 @@ namespace Glass
         private IPlayer player1, player2;
         private IPlayer currentPlayer;
         private IPlayer[] players;
-        private int amountOfSteps; // увеличивается каждые 2 хода
-        private int numberOfStep; // увеличивается каждый ход
+        private int amountOfSteps; // increases every two steps
+        private int numberOfStep; // increases every step
         public int NumberOfStep { get { return this.numberOfStep; } }
-        private int numberOfLastStep; // количество ходов в игре
+        private int numberOfLastStep; // amount of all steps in game
         public int NumberOfLastStep { get { return this.numberOfLastStep; } }
-        private int numberOfGame; // уникальный номер игры
+        private int numberOfGame; // unique number of game
         private enum status : Int16 { notFinished = 0, player1Win = 1, player2Win = 2, invalidStep = 3 };
         private string glassPath, logPath;
         public string GlassPath { get { return glassPath; } }
         public string LogPath { get { return logPath; } }
         private string winner;
         public string Winner { get { return this.winner; } }
-        private int timelimit1, timelimit2;
+        private int timelimit1, timelimit2; // timelimits for both players
 
         public void StartGame()
         {
             status currentStatus = status.notFinished;
 
+            // players make moves in turn
             for (this.numberOfStep = 1; currentStatus == status.notFinished; this.numberOfStep++) {
                 this.amountOfSteps += this.numberOfStep % 2;
                 currentStatus = NewStep(this.currentPlayer);
@@ -71,36 +68,41 @@ namespace Glass
 
             if (currentStatus != status.notFinished) {
                 if (currentStatus == status.player1Win) {
-                    this.label.Text = "Игрок Х победил!" + " (за " + this.amountOfSteps + " ходов)";
+                    this.label.Text = "Player Х won!" + " (in " + this.amountOfSteps + " steps)";
                     this.winner = this.player1.Name;
                 }
                 else if (currentStatus == status.player2Win) {
-                    this.label.Text = "Игрок О победил!" + " (за " + this.amountOfSteps + " ходов)";
+                    this.label.Text = "Player О won!" + " (in " + this.amountOfSteps + " steps)";
                     this.winner = this.player2.Name;
                 }
                 else if (currentStatus == status.invalidStep) {
-                    this.label.Text = String.Format("Игрок {0} сходил неправильно. Игрок {1} победил!",
+                    this.label.Text = String.Format("Player {0} made a bad move. Player {1} won!",
                         Char.ToUpper(currentPlayer.xORo), Char.ToUpper(this.players[this.numberOfStep % 2].xORo));
                     this.winner = this.players[this.numberOfStep % 2].Name;
                 }
             }
             this.panel.Refresh();
-            //MessageBox.Show("a: " + this.field.winCells[0, 0] + this.field.winCells[0, 1]);
         }
 
+        /**
+        * Player makes a move
+        *
+        * @param    player  current player (which will make a move)
+        * @return   status.player1Win or status.player2Win or status.notFinished
+        * @see      CheckStatus()
+        */
         private status NewStep(IPlayer player)
         {
             int newStep = player.Step(this.amountOfSteps);
-            //Application.DoEvents();
             bool IsValid = this.field.ChangeCell(newStep, player.xORo);
-            if (!IsValid) {
-                //MessageBox.Show("Неправильный ход!");
+            if (!IsValid)
                 return status.invalidStep;
-            }
 
             string newFile;
-            if (player == this.player1) newFile = this.player2.Path + this.player1.xORo + this.amountOfSteps + ".txt";
-            else newFile = this.player1.Path + this.player2.xORo + this.amountOfSteps + ".txt";
+            if (player == this.player1)
+                newFile = this.player2.Path + this.player1.xORo + this.amountOfSteps + ".txt";
+            else
+                newFile = this.player1.Path + this.player2.xORo + this.amountOfSteps + ".txt";
 
             StreamWriter file = new StreamWriter(newFile);
             file.WriteLine(Convert.ToString(newStep));
@@ -109,10 +111,16 @@ namespace Glass
             this.panel.Refresh();
             this.label.Refresh();
 
+            // check status of the game every step
             return CheckStatus(newStep);
         }
 
-        // проверка окончания игры (выигрыша)
+        /**
+        * Check status of the game
+        *
+        * @param  changedCol  coloumn on which a move was made
+        * @return status.player1Win or status.player2Win or status.notFinished
+        */
         private status CheckStatus(int changedCol)
         {
             int row, col;
@@ -121,7 +129,7 @@ namespace Glass
             string winStr1, winStr2;
             status result = status.notFinished;
 
-            // чтобы проверять сначала победу текущего игрока (по ТЗ)
+            // at first check the current player, then the other player
             if (currentPlayer == this.player1) {
                 firstWin = status.player1Win;
                 lastWin = status.player2Win;
@@ -135,7 +143,7 @@ namespace Glass
                 winStr2 = new string(this.player1.xORo, 5);
             }
 
-            // горизонтали
+            // horizontal
             for (row = 9; row >= 0; row--) {
                 currentRow = String.Join("", this.field.Cells[row]);
                 if (currentRow.Contains(winStr1)) {
@@ -156,7 +164,7 @@ namespace Glass
                 }
             }
 
-            // вертикали
+            // vertical
             string currentCol = "";
             for (row = 0; row < 10; row++) currentCol += this.field.Cells[row][changedCol];
             if (currentCol.Contains(winStr1)) {
@@ -176,8 +184,8 @@ namespace Glass
                 result = lastWin;
             }
 
-            // диагонали
-            // справа-налево
+            // diagonal
+            // right to left
             string currentDiag;
             int firstCol, firstRow;
             for (firstCol = 4; firstCol <= 9; firstCol++) {
@@ -206,7 +214,7 @@ namespace Glass
                     result = lastWin;
                 }
             }
-            // ниже главной
+
             for (firstRow = 1; firstRow <= 5; firstRow++) {
                 currentDiag = "";
                 for (col = 9, row = firstRow; row <= 9; row++, col--)
@@ -234,7 +242,7 @@ namespace Glass
                 }
             }
 
-            // слева-направо
+            // left to right
             for (firstCol = 5; firstCol >= 0; firstCol--) {
                 currentDiag = "";
                 for (col = firstCol, row = 0; col <= 9; row++, col++)
@@ -261,7 +269,7 @@ namespace Glass
                     result = lastWin;
                 }
             }
-            // ниже главной
+
             for (firstRow = 1; firstRow <= 5; firstRow++) {
                 currentDiag = "";
                 for (col = 0, row = firstRow; row <= 9; row++, col++)
@@ -291,10 +299,10 @@ namespace Glass
             return result;
         }
 
+        // switch between steps
         public void prevStep()
         {
             if (this.amountOfSteps == 0) {
-                //MessageBox.Show("нет предыдущего");
                 return;
             }
 
@@ -307,6 +315,7 @@ namespace Glass
             this.label.Refresh();
         }
 
+        // switch between steps
         public void nextStep()
         {
             IPlayer oldPlayer = this.currentPlayer;
@@ -322,11 +331,10 @@ namespace Glass
                 this.panel.Refresh();
                 this.label.Refresh();
             }
-            catch {
+            catch (ArgumentOutOfRangeException) {
                 this.currentPlayer = oldPlayer;
                 this.amountOfSteps = oldAmountOfSteps;
                 this.numberOfStep--;
-                //MessageBox.Show("нет следующего");
                 return;
             }
         }

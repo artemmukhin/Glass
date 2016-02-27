@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace Glass
 {
-
     interface IPlayer
     {
         char xORo { get; }
@@ -16,7 +15,6 @@ namespace Glass
         int Step(int amountOfSteps);
         string Name { get; }
     }
-
 
     class Brain : IPlayer
     {
@@ -37,7 +35,7 @@ namespace Glass
         private string exe;
         private string name;
         public string Name { get { return this.name; } }
-        private char sym;
+        private char sym; // 'X' or 'O'
         public char xORo { get { return this.sym; } }
         private int timelimit;
 
@@ -51,6 +49,7 @@ namespace Glass
             Process proc = Process.Start(this.exe, CLArguments);
 
             var timeout = DateTime.Now.Add(TimeSpan.FromMilliseconds(this.timelimit));
+            // waiting for move
             while (!File.Exists(currentFile) && DateTime.Now < timeout)
                 Application.DoEvents();
 
@@ -66,9 +65,7 @@ namespace Glass
             Thread.Sleep(20);
             text = File.ReadAllText(currentFile);
             bool result = Int32.TryParse(text, out step);
-            if (!result) {
-                step = -1;
-            }
+            if (!result) step = -1;
 
             this.allSteps.Add(step);
             return step;

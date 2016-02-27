@@ -66,7 +66,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(376, 376);
             this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Статистика";
+            this.tabPage1.Text = "Stats";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // stat_2_count
@@ -97,7 +97,7 @@
             this.stat_2.Name = "stat_2";
             this.stat_2.Size = new System.Drawing.Size(66, 20);
             this.stat_2.TabIndex = 4;
-            this.stat_2.Text = "Игрок 2";
+            this.stat_2.Text = "Player 2";
             // 
             // stat_1
             // 
@@ -107,7 +107,7 @@
             this.stat_1.Name = "stat_1";
             this.stat_1.Size = new System.Drawing.Size(66, 20);
             this.stat_1.TabIndex = 3;
-            this.stat_1.Text = "Игрок 1";
+            this.stat_1.Text = "Player 1";
             // 
             // label1
             // 
@@ -117,7 +117,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 24);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Статистика";
+            this.label1.Text = "Stats";
             // 
             // infoLabel
             // 
@@ -127,7 +127,7 @@
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(328, 20);
             this.infoLabel.TabIndex = 0;
-            this.infoLabel.Text = "Для запуска новой игры нажмите на таб +";
+            this.infoLabel.Text = "Click + to start";
             // 
             // newTabPage
             // 
