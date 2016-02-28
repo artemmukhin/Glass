@@ -25,7 +25,6 @@ namespace Glass
         public Game(Panel panel, Label label, int numberOfGame, string glassPath,
             string name1, string exe1, string name2, string exe2, int timelimit1, int timelimit2)
         {
-            this.amountOfSteps = 0;
             this.numberOfStep = 0;
             this.panel = panel;
             this.label = label;
@@ -54,7 +53,6 @@ namespace Glass
         private IPlayer player1, player2;
         private IPlayer currentPlayer;
         private IPlayer[] players;
-        private int amountOfSteps; // increases every two steps
         private int numberOfStep; // increases every step
         public int NumberOfStep { get { return this.numberOfStep; } }
         private int numberOfLastStep; // amount of all steps in game
@@ -74,7 +72,6 @@ namespace Glass
 
             // players make moves in turn
             for (this.numberOfStep = 1; currentStatus == status.notFinished; this.numberOfStep++) {
-                this.amountOfSteps += this.numberOfStep % 2;
                 currentStatus = NewStep(this.currentPlayer);
                 this.currentPlayer = players[this.numberOfStep % 2];
             }
@@ -84,11 +81,11 @@ namespace Glass
 
             if (currentStatus != status.notFinished) {
                 if (currentStatus == status.player1Win) {
-                    this.label.Text = "Player Х won!" + " (in " + this.amountOfSteps + " steps)";
+                    this.label.Text = "Player Х won!" + " (in " + this.numberOfLastStep + " steps)";
                     this.winner = this.player1.Name;
                 }
                 else if (currentStatus == status.player2Win) {
-                    this.label.Text = "Player О won!" + " (in " + this.amountOfSteps + " steps)";
+                    this.label.Text = "Player О won!" + " (in " + this.numberOfLastStep + " steps)";
                     this.winner = this.player2.Name;
                 }
                 else if (currentStatus == status.invalidStep) {
@@ -107,16 +104,20 @@ namespace Glass
         /// <returns>status.player1Win or status.player2Win or status.notFinished</returns>
         private status NewStep(IPlayer player)
         {
-            int newStep = player.Step(this.amountOfSteps);
+            // numberOfStep increases every players' move
+            // For example: after player1 made a move, numberOfStep will be 2
+            // But we still need 1.txt (instead of 2.txt) from player2
+            int stepOfPlayer = (int)Math.Ceiling(this.numberOfStep / 2.0);
+            int newStep = player.Step(stepOfPlayer);
             bool IsValid = this.field.ChangeCell(newStep, player.xORo);
             if (!IsValid)
                 return status.invalidStep;
 
             string newFile;
             if (player == this.player1)
-                newFile = this.player2.Path + this.player1.xORo + this.amountOfSteps + ".txt";
+                newFile = this.player2.Path + this.player1.xORo + (stepOfPlayer) + ".txt";
             else
-                newFile = this.player1.Path + this.player2.xORo + this.amountOfSteps + ".txt";
+                newFile = this.player1.Path + this.player2.xORo + (stepOfPlayer) + ".txt";
 
             StreamWriter file = new StreamWriter(newFile);
             file.WriteLine(Convert.ToString(newStep));
@@ -316,14 +317,18 @@ namespace Glass
         // switch between steps
         public void prevStep()
         {
-            if (this.amountOfSteps == 0) {
+            // numberOfStep increases every players' move
+            // For example: after player1 made a move, numberOfStep will be 2
+            // But we still need 1.txt (instead of 2.txt) from player2
+            int stepOfPlayer = (int)Math.Ceiling(this.numberOfStep / 2.0);
+
+            if (this.numberOfStep == 0) {
                 return;
             }
 
-            int lastStep = this.currentPlayer.AllSteps[this.amountOfSteps - 1];
+            int lastStep = this.currentPlayer.AllSteps[stepOfPlayer - 1];
             this.field.DeleteCell(lastStep);
             this.currentPlayer = this.players[this.numberOfStep % 2];
-            this.amountOfSteps -= this.numberOfStep % 2;
             this.numberOfStep--;
             this.panel.Refresh();
             this.label.Refresh();
@@ -332,25 +337,20 @@ namespace Glass
         // switch between steps
         public void nextStep()
         {
-            IPlayer oldPlayer = this.currentPlayer;
-            int oldAmountOfSteps = this.amountOfSteps;
-
-            this.currentPlayer = this.players[this.numberOfStep % 2];
-            this.amountOfSteps += (this.numberOfStep + 1) % 2;
-            this.numberOfStep++;
-
-            try {
-                int nextStep = this.currentPlayer.AllSteps[this.amountOfSteps - 1];
-                this.field.ChangeCell(nextStep, this.currentPlayer.xORo);
-                this.panel.Refresh();
-                this.label.Refresh();
-            }
-            catch (ArgumentOutOfRangeException) {
-                this.currentPlayer = oldPlayer;
-                this.amountOfSteps = oldAmountOfSteps;
-                this.numberOfStep--;
+            // if this step is last
+            if (this.numberOfStep == this.numberOfLastStep) {
                 return;
             }
+
+            this.currentPlayer = this.players[this.numberOfStep % 2];
+            this.numberOfStep++;
+
+            int stepOfPlayer = (int)Math.Ceiling(this.numberOfStep / 2.0);
+            int nextStep = this.currentPlayer.AllSteps[stepOfPlayer - 1];
+
+            this.field.ChangeCell(nextStep, this.currentPlayer.xORo);
+            this.panel.Refresh();
+            this.label.Refresh();
         }
     }
 }
