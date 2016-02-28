@@ -1,4 +1,20 @@
-﻿namespace Glass
+﻿/*
+ *************************************************************************
+ * Judge for AI ("Connect Five" game).                               	 *
+ *                                                                   	 *
+ * This program should be used for Connect Five Competition.          	 *
+ * Connect Five is the game like Connect Four; for more information see  *
+ * http://www.math.spbu.ru/user/chernishev/connectfive/connectfive.html  *
+ *                                                                   	 *
+ * Author: Artem Mukhin                                              	 *
+ * Email: <first name>.m.<last name>@gmail.com                         	 *
+ * Year: 2015                                                        	 *
+ * See the LICENSE file in the project root for more information.        *
+ *************************************************************************
+*/
+
+
+namespace Glass
 {
     class Field
     {
@@ -30,12 +46,11 @@
             }
         }
 
-        /**
-        * Add X or O to coloumn
-        *
-        * @param  col   coloumn on which the move was made
-        * @return false if step is invalid, true if step is valid
-        */
+        /// <summary>
+        /// Add X or O to column
+        /// </summary>
+        /// <param name="col">Column on which the move was made</param>
+        /// <returns>false if step is invalid, true if step is valid</returns>
         public bool ChangeCell(int col, char xORo)
         {
             if (col < 0 || col > 9) return false;
@@ -55,13 +70,12 @@
             return true;
         }
 
-        /**
-        * Remove X or O from coloumn
-        * This method is used for rewind steps
-        *
-        * @param  col   coloumn on which the move was made
-        * @see  PrevStep()
-        */
+        /// <summary>
+        /// Remove X or O from column
+        /// This method is used for rewind steps
+        /// </summary>
+        /// <param name="col">Сolumn on which the move was made</param>
+        /// <returns>false if step is invalid, true if step is valid</returns>
         public void DeleteCell(int col)
         {
             if (col == -1) return; // if timeout

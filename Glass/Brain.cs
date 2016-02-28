@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*
+ *************************************************************************
+ * Judge for AI ("Connect Five" game).                               	 *
+ *                                                                   	 *
+ * This program should be used for Connect Five Competition.          	 *
+ * Connect Five is the game like Connect Four; for more information see  *
+ * http://www.math.spbu.ru/user/chernishev/connectfive/connectfive.html  *
+ *                                                                   	 *
+ * Author: Artem Mukhin                                              	 *
+ * Email: <first name>.m.<last name>@gmail.com                         	 *
+ * Year: 2015                                                        	 *
+ * See the LICENSE file in the project root for more information.        *
+ *************************************************************************
+*/
+
+
+using System;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
@@ -39,6 +55,11 @@ namespace Glass
         public char xORo { get { return this.sym; } }
         private int timelimit;
 
+        /// <summary>
+        /// Check status of the game
+        /// </summary>
+        /// <param name="amountOfSteps">Amount of steps (turns) in the game</param>
+        /// <returns>column on which a move was made or -1 if move wasn't made</returns>
         public int Step(int amountOfSteps)
         {
             int step = 0;

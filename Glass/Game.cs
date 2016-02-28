@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*
+ *************************************************************************
+ * Judge for AI ("Connect Five" game).                               	 *
+ *                                                                   	 *
+ * This program should be used for Connect Five Competition.          	 *
+ * Connect Five is the game like Connect Four; for more information see  *
+ * http://www.math.spbu.ru/user/chernishev/connectfive/connectfive.html  *
+ *                                                                   	 *
+ * Author: Artem Mukhin                                              	 *
+ * Email: <first name>.m.<last name>@gmail.com                         	 *
+ * Year: 2015                                                        	 *
+ * See the LICENSE file in the project root for more information.        *
+ *************************************************************************
+*/
+
+
+using System;
 using System.Windows.Forms;
 using System.IO;
 
@@ -84,13 +100,11 @@ namespace Glass
             this.panel.Refresh();
         }
 
-        /**
-        * Player makes a move
-        *
-        * @param    player  current player (which will make a move)
-        * @return   status.player1Win or status.player2Win or status.notFinished
-        * @see      CheckStatus()
-        */
+        /// <summary>
+        /// Player makes a move
+        /// </summary>
+        /// <param name="player">current player (which will make a move)</param>
+        /// <returns>status.player1Win or status.player2Win or status.notFinished</returns>
         private status NewStep(IPlayer player)
         {
             int newStep = player.Step(this.amountOfSteps);
@@ -115,12 +129,12 @@ namespace Glass
             return CheckStatus(newStep);
         }
 
-        /**
-        * Check status of the game
-        *
-        * @param  changedCol  coloumn on which a move was made
-        * @return status.player1Win or status.player2Win or status.notFinished
-        */
+
+        /// <summary>
+        /// Check status of the game
+        /// </summary>
+        /// <param name="changedCol">Column on which a move was made</param>
+        /// <returns>status.player1Win or status.player2Win or status.notFinished</returns>
         private status CheckStatus(int changedCol)
         {
             int row, col;
