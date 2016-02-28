@@ -17,7 +17,7 @@ Make sure config.txt is in the same path as exe file (Judge) with following cont
 `<timelimit for player1>`  
 `<timelimit for player2>`
 
-Example of config.txt:
+Example of config.txt:  
 `C:\Users\Administrator\games\`  
 `Alice C:\Users\Administrator\Alice.exe`  
 `Bob C:\Users\Administrator\Bob.exe`  
