@@ -10,7 +10,7 @@ Year: 2015
 See the LICENSE file in the project root for more information.  
 
 
-Make sure config.txt is in the same path as exe file (Judge) with following content:  
+Make sure config.txt is in the same folder as exe file (Judge) with following content:  
 `<path for the catalog where game data will be stored>`  
 `<name of player1> <path for AI1>`  
 `<name of player2> <path for AI2>`  
