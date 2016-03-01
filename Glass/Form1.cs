@@ -167,7 +167,14 @@ namespace Glass
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Draw a cell of the game field
+        /// </summary>
+        /// <param name="cell">X or O or - (for dent)</param>
+        /// <param name="row">Row where the cell is</param>
+        /// <param name="col">Column where the cell is</param>
+        /// <param name="win">true if the game had finished (for highlight)</param>
         private void DrawCell(char cell, int row, int col, Graphics g, bool win)
         {
             int x, y; // upper left corner
@@ -190,7 +197,7 @@ namespace Glass
                 else if (cell == 'O') g.DrawImage(this.Oimage, x + 6, y + 6);
 
             }
-            // green illumination of five marks in a row (winning position)
+            // green highlight of five marks in a row (winning position)
             else {
                 g.FillRectangle(Brushes.LightGreen, x, y, cellWidth, cellHeight);
                 g.DrawRectangle(Pens.Black, x, y, cellWidth, cellHeight);
