@@ -70,7 +70,7 @@ namespace Glass
         {
             status currentStatus = status.notFinished;
 
-            // players make moves in turn
+            // players make moves in turn-based fashion
             for (this.numberOfStep = 1; currentStatus == status.notFinished; this.numberOfStep++) {
                 currentStatus = NewStep(this.currentPlayer);
                 this.currentPlayer = players[this.numberOfStep % 2];
